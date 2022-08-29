@@ -40,6 +40,17 @@ class MAIN:
         if self.snake.body[0] == self.fruit.pos:
             self.snake.body.append(self.snake.body[-1])
             self.fruit = FRUIT()
+        if self.snake.body[0] == self.snake.body[1]:
+            print("You lose")
+            sys.exit()
+        if self.snake.body[0].x < 0 or self.snake.body[0].x > cell_number-1 or self.snake.body[0].y < 0 or self.snake.body[0].y > cell_number-1:
+            print("You lose")
+            sys.exit()
+        for i in range(1, len(self.snake.body)):
+            if self.snake.body[0] == self.snake.body[i]:
+                print("You lose")
+                sys.exit()
+        
     def draw(self):
         self.snake.draw_snake()
         self.fruit.draw_fruit()
@@ -65,13 +76,17 @@ while True:
             main_game.update()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                main_game.snake.direction = Vector2(0, -1)
+                if main_game.snake.direction != Vector2(0, 1):
+                    main_game.snake.direction = Vector2(0, -1)
             if event.key == pygame.K_DOWN:
-                main_game.snake.direction = Vector2(0, 1)
+                if main_game.snake.direction != Vector2(0, -1):
+                    main_game.snake.direction = Vector2(0, 1)
             if event.key == pygame.K_LEFT:
-                main_game.snake.direction = Vector2(-1, 0)
+                if main_game.snake.direction != Vector2(1, 0):
+                    main_game.snake.direction = Vector2(-1, 0)
             if event.key == pygame.K_RIGHT:
-                main_game.snake.direction = Vector2(1, 0)
+                if main_game.snake.direction != Vector2(-1, 0):
+                    main_game.snake.direction = Vector2(1, 0)
             
     screen.fill(pygame.Color('gold'))
     #pygame.draw.rect(screen, pygame.Color('red'), test_rect)
